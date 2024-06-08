@@ -1,0 +1,7 @@
+brew install golang-migrate
+
+migrate create -ext sql -dir db/migration -seq init_schema
+
+#put create schema and table command in up and drop commands in down
+
+migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
