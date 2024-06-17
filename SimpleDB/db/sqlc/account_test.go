@@ -14,7 +14,14 @@ func createRandomAccount(t *testing.T) Account {
 	var owner = util.RandomOwner()
 	var amount = util.RandomMoney()
 	var currency = util.RandomCurrency()
-	accont, err := testQueries.CreateAccount(context.Background(), owner, amount, currency)
+
+	arg := CreateAccountParams{
+		Owner:    owner,
+		Balance:  amount,
+		Currency: currency,
+	}
+
+	accont, err := testQueries.CreateAccount(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, accont)
 	require.Equal(t, owner, accont.Owner)
@@ -46,7 +53,12 @@ func TestUpdateAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 	Balance := util.RandomMoney()
 
-	account2, err := testQueries.UpdateAccount(context.Background(), account1.ID, Balance)
+	arg := UpdateAccountParams{
+		ID:      account1.ID,
+		Balance: Balance,
+	}
+
+	account2, err := testQueries.UpdateAccount(context.Background(), arg)
 	require.NoError(t, err)
 	require.NotEmpty(t, account2)
 
@@ -73,7 +85,12 @@ func TestListAccounts(t *testing.T) {
 		createRandomAccount(t)
 	}
 
-	accounts, err := testQueries.ListAccounts(context.Background(), 5, 5)
+	arg := ListAccountsParams{
+		Limit:  5,
+		Offset: 5,
+	}
+
+	accounts, err := testQueries.ListAccounts(context.Background(), arg)
 	require.NoError(t, err)
 	require.Len(t, accounts, 5)
 

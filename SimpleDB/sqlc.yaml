@@ -1,4 +1,4 @@
-version: 2
+version: "2"
 plugins:
 - name: golang
   wasm:
@@ -8,15 +8,15 @@ sql:
 - schema: "db/migration/"
   queries: "db/queries/"
   engine: "postgresql"
-  codegen:
-  - plugin: golang
-    out: "db/sqlc"
-    options:
+  gen:
+    go:
       package: "db"
+      out: "db/sqlc"
       emit_json_tags: true
-      sql_package: "database/sql"
-      emit_pointers_for_null_types: true
-      emit_prepared_queries: false
-      emit_interface: false
-      query_parameter_limit: 5
-      emit_exact_table_name: false
+      emit_interface: true
+      emit_empty_slices: true
+      overrides:
+        - db_type: "timestamptz"
+          go_type: "time.Time"
+        - db_type: "uuid"
+          go_type: "github.com/google/uuid.UUID"

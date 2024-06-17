@@ -14,13 +14,14 @@ const (
 )
 
 var testQueries *Queries
+var testDb *sql.DB
 
 func TestMain(m *testing.M) {
-
-	conn, err := sql.Open(dbDrive, dbSource)
+	var err error
+	testDb, err = sql.Open(dbDrive, dbSource)
 	if err != nil {
 		panic(err)
 	}
-	testQueries = New(conn)
+	testQueries = New(testDb)
 	os.Exit(m.Run())
 }
