@@ -30,6 +30,8 @@ func TestGetAccount(t *testing.T) {
 			name:      "OK",
 			accountID: account.ID,
 			buildStubs: func(store *mockdb.MockStore) {
+				//GetAccount(gomock.Any(),        gomock.Eq(account.ID)).
+				//-----------^any contest values, second argumaent ^ account id
 				store.EXPECT().
 					GetAccount(gomock.Any(), gomock.Eq(account.ID)).
 					Times(1).
