@@ -11,7 +11,8 @@ import (
 )
 
 func createRandomAccount(t *testing.T) Account {
-	var owner = util.RandomOwner()
+	user := createRandomUser(t)
+	var owner = user.Username
 	var amount = util.RandomMoney()
 	var currency = util.RandomCurrency()
 
